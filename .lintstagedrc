@@ -1,0 +1,6 @@
+{
+  "*.{js,md}": [
+    "prettier --single-quote --no-semi --trailing-comma=all --write",
+    "git add"
+  ]
+}
