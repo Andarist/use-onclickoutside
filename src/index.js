@@ -20,29 +20,26 @@ export default function useOnClickOutside(ref, handler) {
     return
   }
 
-  useEffect(
-    () => {
-      if (!ref.current) {
+  useEffect(() => {
+    if (!ref.current) {
+      return
+    }
+
+    const listener = event => {
+      if (ref.current.contains(event.target)) {
         return
       }
+      handler(event)
+    }
 
-      const listener = event => {
-        if (ref.current.contains(event.target)) {
-          return
-        }
-        handler(event)
-      }
+    events.forEach(event => {
+      document.addEventListener(event, listener, getOptions(event))
+    })
 
+    return () => {
       events.forEach(event => {
-        document.addEventListener(event, listener, getOptions(event))
+        document.removeEventListener(event, listener, getOptions(event))
       })
-
-      return () => {
-        events.forEach(event => {
-          document.removeEventListener(event, listener, getOptions(event))
-        })
-      }
-    },
-    [ref.current, handler],
-  )
+    }
+  })
 }
