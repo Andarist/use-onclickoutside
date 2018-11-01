@@ -41,5 +41,5 @@ export default function useOnClickOutside(ref, handler) {
         document.removeEventListener(event, listener, getOptions(event))
       })
     }
-  })
+  }, [])
 }
