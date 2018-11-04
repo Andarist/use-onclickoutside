@@ -2,8 +2,10 @@ import { useEffect } from 'react'
 import isBrowser from './isBrowser.macro'
 import testPassiveEventSupport from './testPassiveEventSupport'
 
+const ONCE = []
+const MOUSEDOWN = 'mousedown'
 const TOUCHSTART = 'touchstart'
-const events = ['mousedown', TOUCHSTART]
+const events = [MOUSEDOWN, TOUCHSTART]
 
 const getOptions = event => {
   if (event !== TOUCHSTART) {
@@ -21,14 +23,11 @@ export default function useOnClickOutside(ref, handler) {
   }
 
   useEffect(() => {
-    if (!ref.current) {
-      return
-    }
-
     const listener = event => {
-      if (ref.current.contains(event.target)) {
+      if (!ref.current || ref.current.contains(event.target)) {
         return
       }
+
       handler(event)
     }
 
@@ -41,5 +40,5 @@ export default function useOnClickOutside(ref, handler) {
         document.removeEventListener(event, listener, getOptions(event))
       })
     }
-  }, [])
+  }, ONCE)
 }
