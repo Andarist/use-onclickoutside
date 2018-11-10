@@ -1,6 +1,6 @@
 import { useEffect } from 'react'
+import arePassiveEventsSupported from 'are-passive-events-supported'
 import isBrowser from './isBrowser.macro'
-import testPassiveEventSupport from './testPassiveEventSupport'
 
 const ONCE = []
 const MOUSEDOWN = 'mousedown'
@@ -12,7 +12,7 @@ const getOptions = event => {
     return
   }
 
-  if (testPassiveEventSupport()) {
+  if (arePassiveEventsSupported()) {
     return { passive: true }
   }
 }
