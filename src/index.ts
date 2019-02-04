@@ -1,8 +1,7 @@
-import { useEffect } from 'react'
+import { useEffect, useRef } from 'react'
 import arePassiveEventsSupported from 'are-passive-events-supported'
 import isBrowser from './isBrowser.macro'
 
-const ONCE: [] = []
 const MOUSEDOWN = 'mousedown'
 const TOUCHSTART = 'touchstart'
 
@@ -11,6 +10,7 @@ type HandledEventsType = HandledEvents[number]
 type PossibleEvent = {
   [Type in HandledEventsType]: HTMLElementEventMap[Type]
 }[HandledEventsType]
+type Handler = (event: PossibleEvent) => void
 
 const events: HandledEvents = [MOUSEDOWN, TOUCHSTART]
 
@@ -24,23 +24,35 @@ const getOptions = (event: HandledEventsType) => {
   }
 }
 
-const d: HTMLDivElement = document.createElement('div')
-
 export default function useOnClickOutside(
   ref: React.RefObject<HTMLElement>,
-  handler: (event: PossibleEvent) => void,
+  handler: Handler | null,
 ) {
   if (!isBrowser) {
     return
   }
 
+  const handlerRef = useRef(handler)
+
   useEffect(() => {
+    handlerRef.current = handler
+  })
+
+  useEffect(() => {
+    if (!handler) {
+      return
+    }
+
     const listener = (event: PossibleEvent) => {
-      if (!ref.current || ref.current.contains(event.target as Node)) {
+      if (
+        !ref.current ||
+        !handlerRef.current ||
+        ref.current.contains(event.target as Node)
+      ) {
         return
       }
 
-      handler(event)
+      handlerRef.current(event)
     }
 
     events.forEach(event => {
@@ -54,5 +66,5 @@ export default function useOnClickOutside(
         ) as EventListenerOptions)
       })
     }
-  }, ONCE)
+  }, [!handler])
 }
