@@ -11,6 +11,7 @@ module.exports = {
         modules: false,
       },
     ],
+    '@babel/typescript',
   ],
   plugins: ['macros', test && '@babel/transform-modules-commonjs'].filter(
     Boolean,
