@@ -9,7 +9,7 @@ import * as React from 'react'
 import useOnClickOutside from 'use-onclickoutside'
 
 export default function Modal({ close }) {
-  const ref = React.useRef()
+  const ref = React.useRef(null)
   useOnClickOutside(ref, close)
 
   return <div ref={ref}>{'Modal content'}</div>
