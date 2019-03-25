@@ -1,5 +1,6 @@
 import { useEffect, useRef } from 'react'
 import arePassiveEventsSupported from 'are-passive-events-supported'
+import useLatest from 'use-latest'
 import isBrowser from './isBrowser.macro'
 
 const MOUSEDOWN = 'mousedown'
@@ -32,11 +33,7 @@ export default function useOnClickOutside(
     return
   }
 
-  const handlerRef = useRef(handler)
-
-  useEffect(() => {
-    handlerRef.current = handler
-  })
+  const handlerRef = useLatest(handler)
 
   useEffect(() => {
     if (!handler) {
