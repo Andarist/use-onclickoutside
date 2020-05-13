@@ -44,6 +44,7 @@ export default function useOnClickOutside(
       const element = ref instanceof HTMLElement ? ref : ref.current;
       if (
         !element ||
+        !handlerRef.current ||
         element.contains(event.target as Node)
       ) {
         return
