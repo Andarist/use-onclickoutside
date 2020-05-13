@@ -41,7 +41,7 @@ export default function useOnClickOutside(
     }
 
     const listener = (event: PossibleEvent) => {
-      const element = ref instanceof HTMLElement || ref == null ? ref : ref.current;
+      const element = !ref || 'onblur' in ref ? ref : ref.current;
       if (
         !element ||
         !handlerRef.current ||
