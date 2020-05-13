@@ -26,7 +26,7 @@ const getOptions = (event: HandledEventsType) => {
 }
 
 export default function useOnClickOutside(
-  ref: React.RefObject<HTMLElement> | HTMLElement,
+  ref: React.RefObject<HTMLElement> | HTMLElement | null,
   handler: Handler | null,
 ) {
   if (!isBrowser) {
@@ -41,7 +41,7 @@ export default function useOnClickOutside(
     }
 
     const listener = (event: PossibleEvent) => {
-      const element = ref instanceof HTMLElement ? ref : ref.current;
+      const element = ref instanceof HTMLElement || ref == null ? ref : ref.current;
       if (
         !element ||
         !handlerRef.current ||
