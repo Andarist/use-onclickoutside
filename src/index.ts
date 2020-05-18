@@ -1,4 +1,4 @@
-import { useEffect, useRef } from 'react'
+import { useEffect } from 'react'
 import arePassiveEventsSupported from 'are-passive-events-supported'
 import useLatest from 'use-latest'
 import isBrowser from './isBrowser.macro'
