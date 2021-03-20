@@ -33,7 +33,7 @@
   },
   "homepage": "https://github.com/Andarist/use-onclickoutside#readme",
   "peerDependencies": {
-    "react": "16.8.0-alpha.1 || 17"
+    "react": "^16.8.0-alpha.1 || 17"
   },
   "devDependencies": {
     "@babel/core": "^7.1.5",
