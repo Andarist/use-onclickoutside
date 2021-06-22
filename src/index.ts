@@ -22,9 +22,12 @@ const getAddOptions = (
   }
 }
 
+const currentDocument = typeof document !== 'undefined' ? document : undefined
+
 export default function useOnClickOutside(
   ref: React.RefObject<HTMLElement>,
   handler: Handler | null,
+  { document = currentDocument } = {},
 ) {
   if (typeof document === 'undefined') {
     return
