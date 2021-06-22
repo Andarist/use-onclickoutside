@@ -14,12 +14,10 @@ type Handler = (event: PossibleEvent) => void
 
 const events: HandledEvents = [MOUSEDOWN, TOUCHSTART]
 
-const getOptions = (event: HandledEventsType) => {
-  if (event !== TOUCHSTART) {
-    return
-  }
-
-  if (arePassiveEventsSupported()) {
+const getAddOptions = (
+  event: HandledEventsType,
+): AddEventListenerOptions | undefined => {
+  if (event === TOUCHSTART && arePassiveEventsSupported()) {
     return { passive: true }
   }
 }
@@ -52,16 +50,12 @@ export default function useOnClickOutside(
     }
 
     events.forEach(event => {
-      document.addEventListener(event, listener, getOptions(event))
+      document.addEventListener(event, listener, getAddOptions(event))
     })
 
     return () => {
       events.forEach(event => {
-        document.removeEventListener(
-          event,
-          listener,
-          getOptions(event) as EventListenerOptions,
-        )
+        document.removeEventListener(event, listener)
       })
     }
   }, [!handler])
