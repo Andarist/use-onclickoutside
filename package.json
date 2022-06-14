@@ -1,6 +1,6 @@
 {
   "name": "use-onclickoutside",
-  "version": "0.4.0",
+  "version": "0.4.1",
   "description": "React hook for listening for clicks outside of an element.",
   "main": "dist/use-onclickoutside.cjs.js",
   "module": "dist/use-onclickoutside.esm.js",
