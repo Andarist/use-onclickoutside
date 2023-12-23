@@ -5,12 +5,12 @@ import useLatest from 'use-latest'
 const MOUSEDOWN = 'mousedown'
 const TOUCHSTART = 'touchstart'
 
-type HandledEvents = [typeof MOUSEDOWN, typeof TOUCHSTART]
-type HandledEventsType = HandledEvents[number]
-type PossibleEvent = {
+export type HandledEvents = [typeof MOUSEDOWN, typeof TOUCHSTART]
+export type HandledEventsType = HandledEvents[number]
+export type PossibleEvent = {
   [Type in HandledEventsType]: HTMLElementEventMap[Type]
 }[HandledEventsType]
-type Handler = (event: PossibleEvent) => void
+export type Handler = (event: PossibleEvent) => void
 
 const events: HandledEvents = [MOUSEDOWN, TOUCHSTART]
 
