@@ -25,7 +25,7 @@ const getAddOptions = (
 const currentDocument = typeof document !== 'undefined' ? document : undefined
 
 export default function useOnClickOutside(
-  ref: React.RefObject<HTMLElement>,
+  ref: React.RefObject<HTMLElement> | HTMLElement | null,
   handler: Handler | null,
   { document = currentDocument } = {},
 ) {
@@ -41,10 +41,11 @@ export default function useOnClickOutside(
     }
 
     const listener = (event: PossibleEvent) => {
+      const element = !ref || 'onblur' in ref ? ref : ref.current;
       if (
-        !ref.current ||
+        !element ||
         !handlerRef.current ||
-        ref.current.contains(event.target as Node)
+        element.contains(event.target as Node)
       ) {
         return
       }
@@ -61,5 +62,5 @@ export default function useOnClickOutside(
         document.removeEventListener(event, listener)
       })
     }
-  }, [!handler])
+  }, [!handler, ref])
 }
